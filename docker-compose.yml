@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=minioms
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    expose:
+      - '3306'
+    ports:
+      - '3306:3306'
