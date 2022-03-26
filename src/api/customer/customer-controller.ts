@@ -1,4 +1,4 @@
-import { CREATED, OK } from "http-status";
+import { CREATED, OK, NOT_FOUND } from "http-status";
 import { findAllCustomers, persistCustomer } from "./customer-business";
 import { createCustomerDeserializer } from "./customer-deserializer";
 import {
@@ -32,7 +32,12 @@ const listCustomers = (): CustomerListAllRequestHandler[] => {
     findAllCustomers,
     listCustomersSerializer,
     (req, res) => {
-      res.status(OK).json(res.locals.listOfAllCustomersToRespond);
+      const records = res.locals.listOfAllCustomersToRespond;
+      if (records.length === 0) {
+        res.status(NOT_FOUND).json(records);
+      } else {
+        res.status(OK).json(records);
+      }
     },
   ];
 };
