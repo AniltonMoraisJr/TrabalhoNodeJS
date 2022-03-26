@@ -32,7 +32,6 @@ const listCustomersSerializer: CustomerListAllRequestHandler = async (
   next
 ) => {
   const { listOfAllCustomers } = res.locals;
-  console.log(listOfAllCustomers);
   res.locals.listOfAllCustomersToRespond = listOfAllCustomers.map(
     (customer) => ({
       uuid: customer.uuid,
@@ -49,7 +48,6 @@ const listCustomersSerializer: CustomerListAllRequestHandler = async (
       updatedAt: customer.updatedAt.toISOString(),
     })
   );
-  console.log(res.locals.listOfAllCustomersToRespond);
   next();
 };
 
