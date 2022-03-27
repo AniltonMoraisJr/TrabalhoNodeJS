@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { Model } from "sequelize-typescript";
 import { Optional } from "sequelize/types";
 
-type CustomerAttributes = {
+export type CustomerAttributes = {
   uuid: string;
   name: string;
   cpf?: string;
@@ -32,17 +32,23 @@ type CustomerCreationRequest = {
   };
 };
 
-type CustomerResponse = CustomerCreationRequest & {
-  uuid: string;
-  createdAt: string;
-  updatedAt: string;
-};
+type CustomerResponse =
+  | undefined
+  | (CustomerCreationRequest & {
+      uuid: string;
+      createdAt: string;
+      updatedAt: string;
+    });
 
 type CustomerListReponse = CustomerResponse[];
 
 type CustomerListQueryParams = {
   offset?: string;
   limit?: string;
+};
+
+type CustomerFindOnePathParam = {
+  customerUuid: string;
 };
 
 export abstract class CustomerModel extends Model<
@@ -70,5 +76,16 @@ export type CustomerListAllRequestHandler = RequestHandler<
   {
     listOfAllCustomers: ListCustomerAttributes;
     listOfAllCustomersToRespond: CustomerListReponse;
+  }
+>;
+
+export type CustomerFindOneRequestHandler = RequestHandler<
+  CustomerFindOnePathParam, // path params
+  CustomerResponse, // response
+  {}, // request
+  {}, // query params
+  {
+    findCustomer: CustomerAttributes;
+    findCustomerToRespond: CustomerResponse;
   }
 >;
