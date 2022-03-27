@@ -5,16 +5,16 @@ import { chai, server } from "../../index.spec";
 import jsonSchemaQueryError from "./__SCHEMA__/jsonSchemaQueryError.json";
 
 const cleanDataBase = async () => {
-  console.log("clean database");
+  console.log("Clean database");
   await seeder.down();
 };
 
 const restoreDataBase = async () => {
-  console.log("restore database");
+  console.log("Restore database");
   await seeder.up();
 };
 
-describe("Route POST /v1/customers", function () {
+describe("Route GET /v1/customers", function () {
   describe("Using empty database", function () {
     before(cleanDataBase);
     it("Returns HTTP status code 404 when empty", function (done) {
